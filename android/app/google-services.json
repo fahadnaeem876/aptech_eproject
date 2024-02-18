@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "274903194377",
+    "project_id": "watch-hub-51c7f",
+    "storage_bucket": "watch-hub-51c7f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:274903194377:android:8bdc9b0535e5f759f451d8",
+        "android_client_info": {
+          "package_name": "com.example.e_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_ctHNuDcfAq_8RyXdlHpDB74BnE0WnRs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:274903194377:android:7533d3a61b93e926f451d8",
+        "android_client_info": {
+          "package_name": "com.example.firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_ctHNuDcfAq_8RyXdlHpDB74BnE0WnRs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
