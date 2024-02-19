@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:e_project/user/hometab/category.dart';
 
 class home extends StatelessWidget {
   const home({Key? key}) : super(key: key);
@@ -130,6 +131,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3, // Updated length to 5 for 5 tabs
+      initialIndex: 1, // Set initial index to 1 for "Categories" tab
       child: Scaffold(
         body: Column(
           children: [
@@ -152,45 +154,6 @@ class Home extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class Category extends StatefulWidget {
-  const Category({Key? key}) : super(key: key);
-
-  @override
-  State<Category> createState() => _CategoryState();
-}
-
-class _CategoryState extends State<Category> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Categories'),
-      ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: List.generate(10, (index) {
-            return Container(
-              width: MediaQuery.of(context).size.width /
-                  2, // Set width for 2 containers
-              height: MediaQuery.of(context)
-                  .size
-                  .height, // Match the height of the screen
-              color: Colors.blueAccent,
-              child: Center(
-                child: Text(
-                  'Item $index',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            );
-          }),
         ),
       ),
     );
