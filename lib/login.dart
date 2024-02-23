@@ -11,8 +11,10 @@ class login extends StatefulWidget {
 }
 
 class _loginState extends State<login> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController =
+      TextEditingController(text: "muhammadfahadnaeem4@gmail.com");
+  final TextEditingController passwordController =
+      TextEditingController(text: "12345678");
 
   void login() async {
     FirebaseAuth auth = FirebaseAuth.instance;

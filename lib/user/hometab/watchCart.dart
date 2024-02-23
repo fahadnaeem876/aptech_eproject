@@ -1,79 +1,104 @@
+import 'package:e_project/user/hometab/ProductDetailScreen.dart';
 import 'package:flutter/material.dart';
 
-class WatchCart extends StatefulWidget {
-  const WatchCart({super.key});
+class WatchCart extends StatelessWidget {
+  final Map<String, dynamic> data;
 
-  @override
-  State<WatchCart> createState() => _WatchCartState();
-}
+  const WatchCart({Key? key, required this.data}) : super(key: key);
 
-class _WatchCartState extends State<WatchCart> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      children: [
-        Column(
-          children: [
-            SizedBox(
-              height: 20,
+    final String name = data['title'];
+    final String description = data['description'];
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: Offset(0, 3), // changes position of shadow
             ),
-            Card(
-              elevation: 4,
+          ],
+        ),
+        child: Material(
+          borderRadius: BorderRadius.circular(16.0),
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            onTap: () {
+              // Handle onTap event
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Image side
-                  Expanded(
-                    flex: 2,
-                    child: Image.asset(
-                      "assets/images/model2.png",
-                      height: 150,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.network(
+                      "https://images.pexels.com/photos/277390/pexels-photo-277390.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+                      width: 100,
+                      height: 100,
                       fit: BoxFit.cover,
                     ),
                   ),
-                  // Details side
+                  SizedBox(width: 12),
                   Expanded(
-                    flex: 3,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Watch 1",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          name, // Assuming 'name' field exists in data
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          description, // Assuming 'description' field exists in data
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        SizedBox(height: 12),
+                        Container(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ProductDetailScreen(
+                                    name: name,
+                                    description: description,
+                                  ),
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                            child: Text(
+                              "View Details",
+                              style: TextStyle(
+                                  fontSize: 13, fontWeight: FontWeight.bold),
                             ),
                           ),
-                          SizedBox(height: 8),
-                          Text(
-                            "Price: \$200",
-                            style: TextStyle(fontSize: 14),
-                          ),
-                          Text(
-                            "Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-                            style: TextStyle(fontSize: 14),
-                          ),
-                          SizedBox(height: 8),
-                          ElevatedButton(
-                            onPressed: () {
-                              // Add to cart logic here
-                            },
-                            child: Text("Add to Cart"),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
-          ],
+          ),
         ),
-      ],
+      ),
     );
   }
 }
