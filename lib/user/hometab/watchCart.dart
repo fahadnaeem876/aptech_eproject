@@ -42,8 +42,8 @@ class WatchCart extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.network(
                       "https://images.pexels.com/photos/277390/pexels-photo-277390.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-                      width: 100,
-                      height: 100,
+                      width: 130,
+                      height: 110,
                       fit: BoxFit.cover,
                     ),
                   ),

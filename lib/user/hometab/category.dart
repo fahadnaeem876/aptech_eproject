@@ -99,6 +99,9 @@ class Category extends StatelessWidget {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: 60,
+                    ),
                   ],
                 ),
               ],

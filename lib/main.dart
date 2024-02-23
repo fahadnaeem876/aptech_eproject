@@ -1,3 +1,4 @@
+import 'package:e_project/admin/productadd.dart';
 import 'package:e_project/firebase_options.dart';
 import 'package:e_project/login.dart';
 import 'package:e_project/register.dart';
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: login(),
+      // home: login(),
+      home: ProductAdd(),
       routes: {
         "/login": (context) => login(),
         "/RegisterPage": (context) => RegisterPage(),
