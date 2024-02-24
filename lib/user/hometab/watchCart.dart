@@ -9,7 +9,10 @@ class WatchCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String name = data['title'];
-    final String description = data['description'];
+    final String price = data['price'];
+    final String imgurl = data['imgurl'];
+    final String description = data['Description'];
+    final String subtitle = data['subtitle'];
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
@@ -41,7 +44,7 @@ class WatchCart extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.network(
-                      "https://images.pexels.com/photos/277390/pexels-photo-277390.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+                      imgurl,
                       width: 130,
                       height: 110,
                       fit: BoxFit.cover,
@@ -55,16 +58,29 @@ class WatchCart extends StatelessWidget {
                         Text(
                           name, // Assuming 'name' field exists in data
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        SizedBox(height: 8),
+                        SizedBox(height: 2),
                         Text(
-                          description, // Assuming 'description' field exists in data
-                          style: TextStyle(fontSize: 14),
+                          "Price $price", // Assuming 'name' field exists in data
+                          style: TextStyle(
+                            fontSize: 12,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        SizedBox(height: 12),
+                        SizedBox(height: 2),
+                        Text(
+                          subtitle, // Assuming 'description' field exists in data
+                          style: TextStyle(fontSize: 14),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(height: 2),
                         Container(
                           child: ElevatedButton(
                             onPressed: () {
@@ -74,6 +90,9 @@ class WatchCart extends StatelessWidget {
                                   builder: (context) => ProductDetailScreen(
                                     name: name,
                                     description: description,
+                                    price: price,
+                                    imgurl: imgurl,
+                                    subtitle: subtitle,
                                   ),
                                 ),
                               );
@@ -87,6 +106,8 @@ class WatchCart extends StatelessWidget {
                               "View Details",
                               style: TextStyle(
                                   fontSize: 13, fontWeight: FontWeight.bold),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ),

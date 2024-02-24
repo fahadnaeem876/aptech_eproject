@@ -16,6 +16,7 @@ class _ProductAddState extends State<ProductAdd> {
   TextEditingController namecontroller = TextEditingController();
   TextEditingController pricecontroller = TextEditingController();
   TextEditingController descriptioncontroller = TextEditingController();
+  TextEditingController subtitlecontroller = TextEditingController();
 
   String imagePath = '';
 
@@ -35,6 +36,7 @@ class _ProductAddState extends State<ProductAdd> {
         String name = namecontroller.text;
         String price = pricecontroller.text;
         String description = descriptioncontroller.text;
+        String subtitle = subtitlecontroller.text;
 
         firebase_storage.FirebaseStorage storage =
             firebase_storage.FirebaseStorage.instance;
@@ -50,6 +52,7 @@ class _ProductAddState extends State<ProductAdd> {
         FirebaseFirestore db = FirebaseFirestore.instance;
         await db.collection("products").add({
           "title": name,
+          "subtitle": subtitle,
           "price": price,
           "Description": description,
           "imgurl": downloadurl
@@ -68,66 +71,83 @@ class _ProductAddState extends State<ProductAdd> {
         appBar: AppBar(
           title: Center(child: Text("Add Product")),
         ),
-        body: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                width: 300,
-                child: TextField(
-                  controller: namecontroller,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                      label: Text("Product Name"),
-                      hintText: "Enter Your Product Name",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10))),
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 20,
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 20),
-                width: 300,
-                child: TextField(
-                  controller: pricecontroller,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                      label: Text("Product Price"),
-                      hintText: "Enter Your Product Name",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 20),
-                width: 300,
-                child: TextField(
-                  controller: descriptioncontroller,
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                      label: Text("Product Description"),
-                      hintText: "Enter Your Product Description",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                      onPressed: pickImage,
-                      child: Text("Upload Product Image")),
-                  SizedBox(
-                    width: 18,
+                Container(
+                  width: 300,
+                  child: TextField(
+                    controller: namecontroller,
+                    maxLength: 16,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                        label: Text("Watch Name"),
+                        hintText: "Enter Your Product Name",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10))),
                   ),
-                  ElevatedButton(onPressed: submit, child: Text("Submit")),
-                ],
-              ),
-            ],
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  width: 300,
+                  child: TextField(
+                    controller: subtitlecontroller,
+                    maxLength: 16,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                        label: Text("Watch Subtitle"),
+                        hintText: "Enter Your Watch Subtitle Name",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  width: 300,
+                  child: TextField(
+                    controller: pricecontroller,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                        label: Text("Product Price"),
+                        hintText: "Enter Your Product Name",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  width: 300,
+                  child: TextField(
+                    controller: descriptioncontroller,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                        label: Text("Product Description"),
+                        hintText: "Enter Your Product Description",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10))),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                        onPressed: pickImage,
+                        child: Text("Upload Product Image")),
+                    SizedBox(
+                      width: 18,
+                    ),
+                    ElevatedButton(onPressed: submit, child: Text("Submit")),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

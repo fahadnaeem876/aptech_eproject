@@ -1,3 +1,6 @@
+import 'package:e_project/user/hometab/mycart.dart';
+import 'package:e_project/user/hometab/userprofile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:e_project/user/hometab/category.dart';
 
@@ -6,6 +9,8 @@ class home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: DefaultTabController(
@@ -25,9 +30,7 @@ class home extends StatelessWidget {
                     ),
                     IconButton(
                       icon: Icon(Icons.shopping_cart),
-                      onPressed: () {
-                        // Add functionality for shopping icon
-                      },
+                      onPressed: () {},
                     ),
                   ],
                 ),
@@ -77,9 +80,14 @@ class home extends StatelessWidget {
               // Contents for the search tab
               Center(child: Text('Search Tab Content')),
               // Contents for the favorites tab
-              Center(child: Text('Favorites Tab Content')),
-              // Contents for the profile tab
-              Center(child: Text('Profile Tab Content')),
+              Container(
+                child: MyCart(),
+              ),
+              Container(
+                child: Profile(
+                  uid: user!.uid,
+                ),
+              ),
             ],
           ),
           bottomNavigationBar: Padding(
@@ -107,8 +115,8 @@ class home extends StatelessWidget {
                     text: 'Search',
                   ),
                   Tab(
-                    icon: Icon(Icons.favorite),
-                    text: 'Favorites',
+                    icon: Icon(Icons.shopping_cart),
+                    text: 'My Cart',
                   ),
                   Tab(
                     icon: Icon(Icons.person),

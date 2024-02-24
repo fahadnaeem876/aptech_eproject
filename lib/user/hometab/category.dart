@@ -108,7 +108,7 @@ class Category extends StatelessWidget {
             ),
             StreamBuilder<QuerySnapshot>(
               stream:
-                  FirebaseFirestore.instance.collection('carts').snapshots(),
+                  FirebaseFirestore.instance.collection('products').snapshots(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasError) {

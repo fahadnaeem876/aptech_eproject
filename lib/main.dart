@@ -27,8 +27,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // home: login(),
-      home: ProductAdd(),
+      home: login(),
+      // home: ProductAdd(),
+      // home: home(),
       routes: {
         "/login": (context) => login(),
         "/RegisterPage": (context) => RegisterPage(),
