@@ -1,7 +1,9 @@
+import 'package:e_project/admin/home.dart';
 import 'package:e_project/admin/productadd.dart';
 import 'package:e_project/firebase_options.dart';
 import 'package:e_project/login.dart';
 import 'package:e_project/register.dart';
+import 'package:e_project/splash.dart';
 import 'package:e_project/user/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -27,13 +29,15 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: login(),
+      // home: login(),
+      home: Splash(),
       // home: ProductAdd(),
       // home: home(),
       routes: {
         "/login": (context) => login(),
         "/RegisterPage": (context) => RegisterPage(),
         "/home": (context) => home(),
+        "/adminhome":(context) => AdminHome()
       },
     );
   }

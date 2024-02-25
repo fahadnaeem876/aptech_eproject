@@ -23,7 +23,7 @@ class Category extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(left: 25),
                     child: Text(
-                      "Top Models",
+                      "Top Brand",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w400,
@@ -87,7 +87,7 @@ class Category extends StatelessWidget {
             Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start, 
                   children: [
                     Container(
                       margin: EdgeInsets.only(left: 20),

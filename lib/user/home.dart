@@ -14,7 +14,7 @@ class home extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: DefaultTabController(
-        length: 5, // Updated length to 5 for 5 tabs
+        length: 5, 
         child: Scaffold(
           appBar: AppBar(
             title: Row(
