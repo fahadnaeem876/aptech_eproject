@@ -1,5 +1,4 @@
 import 'package:e_project/admin/home.dart';
-import 'package:e_project/admin/productadd.dart';
 import 'package:e_project/firebase_options.dart';
 import 'package:e_project/login.dart';
 import 'package:e_project/register.dart';
@@ -30,14 +29,14 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: login(),
-      home: Splash(),
+      home: const Splash(),
+      // home: AdminHome(),
       // home: ProductAdd(),
       // home: home(),
       routes: {
-        "/login": (context) => login(),
-        "/RegisterPage": (context) => RegisterPage(),
-        "/home": (context) => home(),
-        "/adminhome":(context) => AdminHome()
+        "/login": (context) => const login(),
+        "/RegisterPage": (context) => const RegisterPage(),
+        "/adminhome": (context) => const AdminHome()
       },
     );
   }

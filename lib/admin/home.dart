@@ -1,5 +1,8 @@
+import 'package:e_project/admin/admins.dart';
+import 'package:e_project/admin/orders.dart';
 import 'package:e_project/admin/productlist.dart';
 import 'package:e_project/admin/profile.dart';
+import 'package:e_project/admin/users.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -27,27 +30,34 @@ class AdminHome extends StatelessWidget {
           body: TabBarView(
             children: [
               Container(
-                child: ProductList(),
+                child: const ProductList(),
               ),
-              Center(child: Text('Messages Tab Content')),
-              Center(child: Text('Search Tab Content')),
-              Center(child: Text('My Cart Tab Content')),
               Container(
-                child: Adminprofile(
+                child: const Users(),
+              ),
+              Container(
+                child: const Orders(),
+              ),
+              Container(
+                child: const Admins(),
+              ),
+              Container(
+                child: Profile(
                   uid: user!.uid,
                 ),
               ),
             ],
           ),
           bottomNavigationBar: Padding(
-            padding: EdgeInsets.only(top: 16.0), // Adjust the value as needed
+            padding:
+                const EdgeInsets.only(top: 16.0), // Adjust the value as needed
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 border: Border(
                   top: BorderSide(width: 1.0, color: Colors.grey),
                 ),
               ),
-              child: TabBar(
+              child: const TabBar(
                 labelPadding: EdgeInsets.zero,
                 labelStyle: TextStyle(fontSize: 10),
                 tabs: [
@@ -56,16 +66,16 @@ class AdminHome extends StatelessWidget {
                     text: 'Home',
                   ),
                   Tab(
-                    icon: Icon(Icons.message),
-                    text: 'Messages',
+                    icon: Icon(Icons.dashboard_customize),
+                    text: 'Users',
                   ),
                   Tab(
-                    icon: Icon(Icons.search),
-                    text: 'Search',
+                    icon: Icon(Icons.book),
+                    text: 'Order',
                   ),
                   Tab(
-                    icon: Icon(Icons.shopping_cart),
-                    text: 'My Cart',
+                    icon: Icon(Icons.admin_panel_settings),
+                    text: 'Admin',
                   ),
                   Tab(
                     icon: Icon(Icons.person),

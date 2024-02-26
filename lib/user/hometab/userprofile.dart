@@ -1,3 +1,5 @@
+import 'package:e_project/SelectRole.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -195,6 +197,26 @@ class _ProfileState extends State<Profile> {
                       ],
                     )
                   : SizedBox.shrink(),
+              ElevatedButton(
+                onPressed: () async {
+                  // Handle logout functionality
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          selectrole(), // Replace with your login screen widget
+                    ),
+                  );
+                },
+                child: Text(
+                  'Logout',
+                  style: TextStyle(color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red, // Background color set to red
+                ),
+              ),
             ],
           ),
         ),

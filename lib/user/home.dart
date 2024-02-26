@@ -1,5 +1,7 @@
+import 'package:e_project/login.dart';
 import 'package:e_project/user/hometab/mycart.dart';
 import 'package:e_project/user/hometab/userprofile.dart';
+import 'package:e_project/user/order.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:e_project/user/hometab/category.dart';
@@ -14,13 +16,21 @@ class home extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: DefaultTabController(
-        length: 5, 
+        length: 5,
         child: Scaffold(
           appBar: AppBar(
             title: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                Text(
+                  'Watch Hub',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Spacer(), // Adds space between text and icons
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     IconButton(
                       icon: Icon(Icons.search),
@@ -37,46 +47,16 @@ class home extends StatelessWidget {
               ],
             ),
           ),
-          drawer: Drawer(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: <Widget>[
-                DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                  ),
-                  child: Text(
-                    'User Profile',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
-                  ),
-                ),
-                ListTile(
-                  title: Text('Item 1'),
-                  onTap: () {
-                    // Add functionality for Item 1
-                  },
-                ),
-                ListTile(
-                  title: Text('Item 2'),
-                  onTap: () {
-                    // Add functionality for Item 2
-                  },
-                ),
-                // Add more ListTiles for additional items
-              ],
-            ),
-          ),
           body: TabBarView(
             children: [
               // Contents for the home tab
               Container(
                 child: Home(),
               ),
+              Container(
+                child: Order(),
+              ),
               // Contents for the messages tab
-              Center(child: Text('Messages Tab Content')),
               // Contents for the search tab
               Center(child: Text('Search Tab Content')),
               // Contents for the favorites tab
@@ -93,12 +73,12 @@ class home extends StatelessWidget {
           bottomNavigationBar: Padding(
             padding: EdgeInsets.only(top: 16.0), // Adjust the value as needed
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 border: Border(
                   top: BorderSide(width: 1.0, color: Colors.grey),
                 ),
               ),
-              child: TabBar(
+              child: const TabBar(
                 labelPadding: EdgeInsets.zero,
                 labelStyle: TextStyle(fontSize: 10),
                 tabs: [
@@ -107,8 +87,8 @@ class home extends StatelessWidget {
                     text: 'Home',
                   ),
                   Tab(
-                    icon: Icon(Icons.message),
-                    text: 'Messages',
+                    icon: Icon(Icons.book),
+                    text: 'Order',
                   ),
                   Tab(
                     icon: Icon(Icons.search),
@@ -143,7 +123,7 @@ class Home extends StatelessWidget {
       child: Scaffold(
         body: Column(
           children: [
-            TabBar(
+            const TabBar(
               tabs: [
                 Tab(text: 'Feed'),
                 Tab(text: 'Categories'),

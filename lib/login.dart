@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_project/register.dart';
+import 'package:e_project/user/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -31,7 +32,8 @@ class _loginState extends State<login> {
 
       final data = snapshot.data();
 
-      Navigator.of(context).pushNamed("/home");
+      // Navigator.of(context).pushNamed("/home");
+      Navigator.push(context, MaterialPageRoute(builder: (context) => home()));
     } catch (e) {
       print("Error occurred: $e");
     }

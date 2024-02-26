@@ -1,5 +1,5 @@
 import 'package:e_project/admin/productadd.dart';
-import 'package:e_project/admin/productedit.dart'; // Import the editing screen
+import 'package:e_project/admin/productedit.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -15,15 +15,21 @@ class _ProductListState extends State<ProductList> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                child: Text("All Products"),
-              ),
-              Container(
-                child: ElevatedButton(
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "All Products",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -32,8 +38,8 @@ class _ProductListState extends State<ProductList> {
                   },
                   child: Text("Add Product"),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
@@ -53,48 +59,35 @@ class _ProductListState extends State<ProductList> {
                       final imageUrl = product['imgurl'];
 
                       return Card(
+                        margin: EdgeInsets.symmetric(
+                            vertical: 4,
+                            horizontal: 16), // Adjusted margin here
                         elevation: 2,
-                        margin:
-                            EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                         child: ListTile(
                           contentPadding: EdgeInsets.all(16),
                           leading: Container(
-                            width: 80,
-                            height: 60,
+                            width: 50,
+                            height: 50,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.0),
+                              borderRadius: BorderRadius.circular(100),
                               image: DecorationImage(
                                 image: NetworkImage(imageUrl),
                                 fit: BoxFit.cover,
                               ),
                             ),
                           ),
-                          title: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                product['title'],
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              SizedBox(height: 4),
-                              Text(
-                                'Price: ${product['price']}',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
+                          title: Text(
+                            product['title'],
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                           subtitle: Text(
                             product['subtitle'],
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
+                            style: TextStyle(fontSize: 12),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -105,7 +98,6 @@ class _ProductListState extends State<ProductList> {
                                 color: Colors.green,
                                 icon: Icon(Icons.edit),
                                 onPressed: () {
-                                  // Navigate to the editing screen and pass the product details
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -119,7 +111,6 @@ class _ProductListState extends State<ProductList> {
                                 color: Colors.red,
                                 icon: Icon(Icons.delete),
                                 onPressed: () {
-                                  // Call function to delete product
                                   _deleteProduct(product.id);
                                 },
                               ),
@@ -144,7 +135,6 @@ class _ProductListState extends State<ProductList> {
         .doc(productId)
         .delete()
         .then((value) {
-      // Refresh the widget state after deleting the product
       setState(() {});
     });
   }

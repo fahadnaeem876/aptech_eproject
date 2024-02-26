@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_project/admin/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -44,7 +45,9 @@ class _adminloginformState extends State<adminloginform> {
 
         if (documents.isNotEmpty) {
           // Admin with matching email found in Firestore
-          Navigator.of(context).pushNamed("/adminhome");
+          // Navigator.of(context).pushNamed("/adminhome");
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => AdminHome()));
         } else {
           // No admin with matching email found in Firestore
           print("User is not authorized as an admin.");

@@ -1,16 +1,18 @@
+import 'package:e_project/SelectRole.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Adminprofile extends StatefulWidget {
+class Profile extends StatefulWidget {
   final String uid;
 
-  const Adminprofile({Key? key, required this.uid}) : super(key: key);
+  const Profile({Key? key, required this.uid}) : super(key: key);
 
   @override
-  State<Adminprofile> createState() => _AdminprofileState();
+  State<Profile> createState() => _ProfileState();
 }
 
-class _AdminprofileState extends State<Adminprofile> {
+class _ProfileState extends State<Profile> {
   late String _username = '';
   late String _email = '';
   late String _address = '';
@@ -25,27 +27,25 @@ class _AdminprofileState extends State<Adminprofile> {
 
   void fetchUserDetails() async {
     try {
-      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+      QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
           .instance
-          .collection('users')
-          .doc(widget.uid)
+          .collection('admin')
+          .where('uid', isEqualTo: widget.uid)
           .get();
 
-      if (snapshot.exists) {
+      if (snapshot.docs.isNotEmpty) {
+        // Assuming there's only one document matching the uid
         setState(() {
-          _username = snapshot.data()!['admin_name'];
-          _email = snapshot.data()!['email'];
-          _address = snapshot.data()!['address'];
-          _phone = snapshot.data()!['phone'];
+          _username = snapshot.docs.first.data()['admin_name'];
+          _email = snapshot.docs.first.data()['email'];
+          _address = snapshot.docs.first.data()['address'];
+          _phone = snapshot.docs.first.data()['phone'];
         });
       } else {
-        // Handle if the user is not found in the admin collection
-        print('User not found in the admin collection.');
-        // You can display an error message or navigate to another page accordingly
+        print("Document not found for uid: ${widget.uid}");
       }
     } catch (error) {
-      print('Error fetching user details: $error');
-      // Handle any errors that occur during fetching user details
+      print("Error fetching user details: $error");
     }
   }
 
@@ -57,28 +57,39 @@ class _AdminprofileState extends State<Adminprofile> {
 
   void _saveProfile() async {
     try {
-      await FirebaseFirestore.instance
-          .collection('admin')
-          .doc(widget.uid)
-          .update({
-        'admin_name': _username,
-        'email': _email,
-        'address': _address,
-        'phone': _phone,
-      });
-      setState(() {
-        _isEditable = false;
-      });
-      // Optionally, you can show a snackbar or toast to indicate successful update
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Profile updated successfully'),
-        ),
-      );
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await FirebaseFirestore.instance
+              .collection('admin')
+              .where('uid', isEqualTo: widget.uid)
+              .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        // Assuming there's only one document matching the uid
+        String docId = querySnapshot.docs.first.id;
+        await FirebaseFirestore.instance.collection('admin').doc(docId).update({
+          'admin_name': _username,
+          'email': _email,
+          'address': _address,
+          'phone': _phone,
+        });
+        setState(() {
+          _isEditable = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Profile updated successfully'),
+          ),
+        );
+      } else {
+        print("Document not found for uid: ${widget.uid}");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to update profile. User not found.'),
+          ),
+        );
+      }
     } catch (error) {
-      // Handle any errors that occur during the update process
       print('Error updating profile: $error');
-      // Optionally, you can show a snackbar or toast to indicate the error
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Failed to update profile. Please try again.'),
@@ -204,6 +215,26 @@ class _AdminprofileState extends State<Adminprofile> {
                       ],
                     )
                   : SizedBox.shrink(),
+              ElevatedButton(
+                onPressed: () async {
+                  // Handle logout functionality
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          selectrole(), // Replace with your login screen widget
+                    ),
+                  );
+                },
+                child: Text(
+                  'Logout',
+                  style: TextStyle(color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red, // Background color set to red
+                ),
+              ),
             ],
           ),
         ),
