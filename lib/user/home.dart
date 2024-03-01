@@ -16,17 +16,15 @@ class home extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: DefaultTabController(
-        length: 5,
+        length: 4,
         child: Scaffold(
           appBar: AppBar(
             title: Row(
               children: [
-                Text(
-                  'Watch Hub',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Image.asset(
+                  "assets/images/watchhub.png",
+                  height: 80,
+                  width: 90,
                 ),
                 Spacer(), // Adds space between text and icons
                 Row(
@@ -58,7 +56,6 @@ class home extends StatelessWidget {
               ),
               // Contents for the messages tab
               // Contents for the search tab
-              Center(child: Text('Search Tab Content')),
               // Contents for the favorites tab
               Container(
                 child: MyCart(),
@@ -89,10 +86,6 @@ class home extends StatelessWidget {
                   Tab(
                     icon: Icon(Icons.book),
                     text: 'Order',
-                  ),
-                  Tab(
-                    icon: Icon(Icons.search),
-                    text: 'Search',
                   ),
                   Tab(
                     icon: Icon(Icons.shopping_cart),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Users extends StatefulWidget {
   const Users({Key? key}) : super(key: key);
@@ -64,11 +65,14 @@ class _UsersState extends State<Users> {
                           actions: [
                             TextButton(
                               onPressed: () async {
-                                // Delete account from database
+                                // Delete account from Firestore
                                 await FirebaseFirestore.instance
                                     .collection('users')
                                     .doc(userData.id)
                                     .delete();
+
+                                // Delete account from Firebase Authentication
+
                                 Navigator.of(context).pop(); // Close the dialog
                               },
                               child: Text('Delete'),

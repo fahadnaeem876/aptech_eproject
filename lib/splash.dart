@@ -24,23 +24,25 @@ class _SplashState extends State<Splash> {
   }
 
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Center(
-          child: Container(
-            margin: EdgeInsets.only(left: 80),
-            width: 200,
-            height: 200,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(100),
-              child: Image.asset(
-                "assets/images/model6.png",
-                fit: BoxFit.cover,
+    return Scaffold(
+      body: Row(
+        children: [
+          Center(
+            child: Container(
+              margin: EdgeInsets.only(left: 80),
+              width: 200,
+              height: 200,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: Image.asset(
+                  "assets/images/splashlogo.png",
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

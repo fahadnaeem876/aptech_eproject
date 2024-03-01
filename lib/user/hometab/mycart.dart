@@ -1,3 +1,5 @@
+import 'package:e_project/user/home.dart';
+import 'package:e_project/user/pay.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -27,34 +29,6 @@ class _MyCartState extends State<MyCart> {
     } catch (e) {
       // Handle errors here
       print('Error deleting cart item: $e');
-    }
-  }
-
-  void _handleCheckout() async {
-    try {
-      // Get the cart items
-      QuerySnapshot cartSnapshot = await FirebaseFirestore.instance
-          .collection('carts')
-          .where('uid', isEqualTo: _user!.uid)
-          .get();
-
-      // Add the cart items to the orders collection
-      WriteBatch batch = FirebaseFirestore.instance.batch();
-      cartSnapshot.docs.forEach((doc) {
-        batch.set(
-          FirebaseFirestore.instance.collection('orders').doc(),
-          doc.data(),
-        );
-      });
-      await batch.commit();
-
-      // Delete the cart items
-      cartSnapshot.docs.forEach((doc) async {
-        await doc.reference.delete();
-      });
-    } catch (e) {
-      // Handle errors here
-      print('Error during checkout: $e');
     }
   }
 
@@ -159,7 +133,13 @@ class _MyCartState extends State<MyCart> {
                             margin: EdgeInsets.only(top: 10),
                             width: 300,
                             child: ElevatedButton(
-                              onPressed: _handleCheckout,
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Pay(user: _user!)));
+                              },
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.green, // background color
                                 onPrimary: Colors.white, // text color

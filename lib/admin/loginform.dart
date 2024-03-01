@@ -12,7 +12,7 @@ class adminloginform extends StatefulWidget {
 
 class _adminloginformState extends State<adminloginform> {
   final TextEditingController emailController =
-      TextEditingController(text: "admin@gmail.com");
+      TextEditingController(text: "admin1@gmail.com");
   final TextEditingController passwordController =
       TextEditingController(text: "12345678");
 

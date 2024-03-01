@@ -1,3 +1,4 @@
+import 'package:e_project/user/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -121,9 +122,19 @@ class ProductDetailScreen extends StatelessWidget {
                       });
 
                       // Show a snackbar or any feedback to indicate success
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Product added to cart')),
-                      );
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(
+                            SnackBar(
+                              content: Text('Product added to cart'),
+                            ),
+                          )
+                          .closed
+                          .then((_) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => home()),
+                        );
+                      });
                     } else {
                       // User is not logged in, handle accordingly
                       // For example, show a dialog to prompt user to login
@@ -161,42 +172,6 @@ class ProductDetailScreen extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-        ),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(top: 16.0), // Adjust the value as needed
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border(
-                top: BorderSide(width: 1.0, color: Colors.grey),
-              ),
-            ),
-            child: TabBar(
-              labelPadding: EdgeInsets.zero,
-              labelStyle: TextStyle(fontSize: 10),
-              tabs: [
-                Tab(
-                  icon: Icon(Icons.home),
-                  text: 'Home',
-                ),
-                Tab(
-                  icon: Icon(Icons.message),
-                  text: 'Messages',
-                ),
-                Tab(
-                  icon: Icon(Icons.search),
-                  text: 'Search',
-                ),
-                Tab(
-                  icon: Icon(Icons.shopping_cart),
-                  text: 'My Cart',
-                ),
-                Tab(
-                  icon: Icon(Icons.person),
-                  text: 'Profile',
-                ),
-              ],
-            ),
           ),
         ),
       ),
