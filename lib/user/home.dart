@@ -22,9 +22,8 @@ class home extends StatelessWidget {
             title: Row(
               children: [
                 Image.asset(
-                  "assets/images/watchhub.png",
-                  height: 80,
-                  width: 90,
+                  "assets/images/watchhub1.png",
+                  height: 120,
                 ),
                 Spacer(), // Adds space between text and icons
                 Row(
