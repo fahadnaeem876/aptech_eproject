@@ -1,4 +1,5 @@
 import 'package:e_project/login.dart';
+import 'package:e_project/user/hometab/allbrand.dart';
 import 'package:e_project/user/hometab/mycart.dart';
 import 'package:e_project/user/hometab/userprofile.dart';
 import 'package:e_project/user/order.dart';
@@ -110,26 +111,26 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3, // Updated length to 5 for 5 tabs
-      initialIndex: 1, // Set initial index to 1 for "Categories" tab
+      length: 2, // Updated length to 5 for 5 tabs
+      initialIndex: 0, // Set initial index to 1 for "Categories" tab
       child: Scaffold(
         body: Column(
           children: [
             const TabBar(
               tabs: [
-                Tab(text: 'Feed'),
                 Tab(text: 'Categories'),
-                Tab(text: 'Watch Scanner'),
+                Tab(text: 'All Brands'),
               ],
             ),
             Expanded(
               child: TabBarView(
                 children: [
-                  Center(child: Text('Feed Tab Content')),
                   Container(
                     child: Category(),
                   ),
-                  Center(child: Text('Watch Scanner Tab Content')),
+                  Container(
+                    child: AllBrandsScreen(),
+                  ),
                 ],
               ),
             ),

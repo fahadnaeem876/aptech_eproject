@@ -19,7 +19,10 @@ class AdminHome extends StatelessWidget {
         length: 5,
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Watch Hub'),
+            title: Image.asset(
+              "assets/images/watchhub1.png",
+              height: 120,
+            ),
             actions: [
               IconButton(
                 icon: Icon(Icons.shopping_cart),
