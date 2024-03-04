@@ -1,3 +1,9 @@
+import 'package:e_project/login.dart';
+import 'package:e_project/user/hometab/allbrand.dart';
+import 'package:e_project/user/hometab/mycart.dart';
+import 'package:e_project/user/hometab/userprofile.dart';
+import 'package:e_project/user/order.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:e_project/user/hometab/category.dart';
 
@@ -6,16 +12,23 @@ class home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: DefaultTabController(
-        length: 5, // Updated length to 5 for 5 tabs
+        length: 4,
         child: Scaffold(
           appBar: AppBar(
             title: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                Image.asset(
+                  "assets/images/watchhub1.png",
+                  height: 120,
+                ),
+                Spacer(), // Adds space between text and icons
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     IconButton(
                       icon: Icon(Icons.search),
@@ -25,44 +38,10 @@ class home extends StatelessWidget {
                     ),
                     IconButton(
                       icon: Icon(Icons.shopping_cart),
-                      onPressed: () {
-                        // Add functionality for shopping icon
-                      },
+                      onPressed: () {},
                     ),
                   ],
                 ),
-              ],
-            ),
-          ),
-          drawer: Drawer(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: <Widget>[
-                DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                  ),
-                  child: Text(
-                    'User Profile',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
-                  ),
-                ),
-                ListTile(
-                  title: Text('Item 1'),
-                  onTap: () {
-                    // Add functionality for Item 1
-                  },
-                ),
-                ListTile(
-                  title: Text('Item 2'),
-                  onTap: () {
-                    // Add functionality for Item 2
-                  },
-                ),
-                // Add more ListTiles for additional items
               ],
             ),
           ),
@@ -72,25 +51,31 @@ class home extends StatelessWidget {
               Container(
                 child: Home(),
               ),
+              Container(
+                child: Order(),
+              ),
               // Contents for the messages tab
-              Center(child: Text('Messages Tab Content')),
               // Contents for the search tab
-              Center(child: Text('Search Tab Content')),
               // Contents for the favorites tab
-              Center(child: Text('Favorites Tab Content')),
-              // Contents for the profile tab
-              Center(child: Text('Profile Tab Content')),
+              Container(
+                child: MyCart(),
+              ),
+              Container(
+                child: Profile(
+                  uid: user!.uid,
+                ),
+              ),
             ],
           ),
           bottomNavigationBar: Padding(
             padding: EdgeInsets.only(top: 16.0), // Adjust the value as needed
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 border: Border(
                   top: BorderSide(width: 1.0, color: Colors.grey),
                 ),
               ),
-              child: TabBar(
+              child: const TabBar(
                 labelPadding: EdgeInsets.zero,
                 labelStyle: TextStyle(fontSize: 10),
                 tabs: [
@@ -99,16 +84,12 @@ class home extends StatelessWidget {
                     text: 'Home',
                   ),
                   Tab(
-                    icon: Icon(Icons.message),
-                    text: 'Messages',
+                    icon: Icon(Icons.book),
+                    text: 'Order',
                   ),
                   Tab(
-                    icon: Icon(Icons.search),
-                    text: 'Search',
-                  ),
-                  Tab(
-                    icon: Icon(Icons.favorite),
-                    text: 'Favorites',
+                    icon: Icon(Icons.shopping_cart),
+                    text: 'My Cart',
                   ),
                   Tab(
                     icon: Icon(Icons.person),
@@ -130,26 +111,26 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3, // Updated length to 5 for 5 tabs
-      initialIndex: 1, // Set initial index to 1 for "Categories" tab
+      length: 2, // Updated length to 5 for 5 tabs
+      initialIndex: 0, // Set initial index to 1 for "Categories" tab
       child: Scaffold(
         body: Column(
           children: [
-            TabBar(
+            const TabBar(
               tabs: [
-                Tab(text: 'Feed'),
                 Tab(text: 'Categories'),
-                Tab(text: 'Watch Scanner'),
+                Tab(text: 'All Brands'),
               ],
             ),
             Expanded(
               child: TabBarView(
                 children: [
-                  Center(child: Text('Feed Tab Content')),
                   Container(
                     child: Category(),
                   ),
-                  Center(child: Text('Watch Scanner Tab Content')),
+                  Container(
+                    child: AllBrandsScreen(),
+                  ),
                 ],
               ),
             ),

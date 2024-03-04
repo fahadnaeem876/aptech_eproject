@@ -45,19 +45,47 @@ class _RegisterPageState extends State<RegisterPage> {
       );
     } else {
       try {
-        final UserCredential user = await auth.createUserWithEmailAndPassword(
+        final UserCredential userCredential =
+            await auth.createUserWithEmailAndPassword(
           email: email,
           password: password,
         );
-        await db.collection("users").doc(user.user!.uid).set({
+
+        final String uid = userCredential.user!.uid; // Get user UID
+
+        await db.collection("users").doc(uid).set({
           "email": email,
           "username": username,
           "phone": phone,
-          "address": address
+          "address": address,
+          "uid": uid, // Save UID in the user document
         });
+
         print("User registration successful");
         Navigator.of(context).pushNamed("/login");
-
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'email-already-in-use') {
+          // Email is already registered
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text("Email Already Registered"),
+                content: Text("The email address is already registered."),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context); // Close the dialog
+                    },
+                    child: Text("OK"),
+                  ),
+                ],
+              );
+            },
+          );
+        } else {
+          print("Error occurred: ${e.message}");
+        }
       } catch (e) {
         print("Error occurred: $e");
       }

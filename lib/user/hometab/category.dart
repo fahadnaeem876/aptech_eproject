@@ -1,19 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:e_project/user/hometab/watchCart.dart';
+import 'package:e_project/user/hometab/watchCart.dart'; // Assuming this import is correct
 
-class Category extends StatefulWidget {
-  const Category({Key? key}) : super(key: key);
+class Category extends StatelessWidget {
+  const Category({Key? key});
 
-  @override
-  State<Category> createState() => _CategoryState();
-}
-
-class _CategoryState extends State<Category> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -24,8 +21,9 @@ class _CategoryState extends State<Category> {
                     height: 60,
                   ),
                   Container(
+                    margin: EdgeInsets.only(left: 25),
                     child: Text(
-                      "Top Models",
+                      "Top Brands",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w400,
@@ -101,10 +99,42 @@ class _CategoryState extends State<Category> {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: 60,
+                    ),
                   ],
                 ),
-                WatchCart(),
               ],
+            ),
+            StreamBuilder<QuerySnapshot>(
+              stream:
+                  FirebaseFirestore.instance.collection('products').snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Something went wrong');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                      child:
+                          CircularProgressIndicator()); // Show a loading indicator
+                }
+
+                // Display the data from the stream
+                return ListView(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  children:
+                      snapshot.data!.docs.map((DocumentSnapshot document) {
+                    Map<String, dynamic> data =
+                        document.data() as Map<String, dynamic>;
+                    return WatchCart(
+                        data:
+                            data); // Assuming WatchCart widget is correctly implemented
+                  }).toList(),
+                );
+              },
             ),
           ],
         ),

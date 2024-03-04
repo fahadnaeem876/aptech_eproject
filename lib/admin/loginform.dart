@@ -1,19 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_project/register.dart';
-import 'package:e_project/user/home.dart';
+import 'package:e_project/admin/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class login extends StatefulWidget {
-  const login({Key? key}) : super(key: key);
+class adminloginform extends StatefulWidget {
+  const adminloginform({Key? key}) : super(key: key);
 
   @override
-  _loginState createState() => _loginState();
+  _adminloginformState createState() => _adminloginformState();
 }
 
-class _loginState extends State<login> {
+class _adminloginformState extends State<adminloginform> {
   final TextEditingController emailController =
-      TextEditingController(text: "muhammadfahadnaeem4@gmail.com");
+      TextEditingController(text: "admin1@gmail.com");
   final TextEditingController passwordController =
       TextEditingController(text: "12345678");
 
@@ -25,15 +24,38 @@ class _loginState extends State<login> {
     final String password = passwordController.text;
 
     try {
-      final UserCredential user = await auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      final DocumentSnapshot snapshot =
-          await db.collection("users").doc(user.user!.uid).get();
+      // Authenticate user with Firebase Authentication
+      final UserCredential userCredential =
+          await auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-      final data = snapshot.data();
+      final User? user = userCredential.user;
 
-      // Navigator.of(context).pushNamed("/home");
-      Navigator.push(context, MaterialPageRoute(builder: (context) => home()));
+      if (user != null) {
+        // Fetch admin document from Firestore
+        final QuerySnapshot result = await db
+            .collection("admin")
+            .where("email", isEqualTo: email)
+            .limit(1)
+            .get();
+
+        final List<DocumentSnapshot> documents = result.docs;
+
+        if (documents.isNotEmpty) {
+          // Admin with matching email found in Firestore
+          // Navigator.of(context).pushNamed("/adminhome");
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => AdminHome()));
+        } else {
+          // No admin with matching email found in Firestore
+          print("User is not authorized as an admin.");
+        }
+      } else {
+        // User is null, login failed
+        print("Login failed. User not found.");
+      }
     } catch (e) {
       print("Error occurred: $e");
     }
@@ -43,7 +65,7 @@ class _loginState extends State<login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text('Sigin Form')),
+        title: Center(child: Text('Sign-in Form')),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -60,7 +82,6 @@ class _loginState extends State<login> {
               ),
             ),
             SizedBox(height: 16),
-            SizedBox(height: 16),
             TextField(
               controller: passwordController,
               obscureText: true,
@@ -72,13 +93,7 @@ class _loginState extends State<login> {
                 ),
               ),
             ),
-            SizedBox(height: 5),
-            TextButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => RegisterPage()));
-                },
-                child: Text("signup if you don't have an account")),
+            SizedBox(height: 16),
             ElevatedButton(
               onPressed: login,
               child: Text("Login"),
